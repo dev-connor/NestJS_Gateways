@@ -1,7 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { io } from "socket.io-client";import { useState, useEffect } from "react";
+
+const socket = io('http://localhost', { autoConnect: false });
 
 function App() {
+  useEffect(() => {
+    socket.connect();
+    console.log('socket connected')
+
+    socket.on("chat", (newMessage) => {
+      console.log("New message added", newMessage);
+      // setMessages((previousMessages) => [...previousMessages, newMessage]);
+    });
+
+  }, [])
+  
   return (
     <div className="App">
       <header className="App-header">
